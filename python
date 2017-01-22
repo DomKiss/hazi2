@@ -1,0 +1,261 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 1. feladat\n",
+    "## One time pad titkosítás\n",
+    "\n",
+    "Határidő: 2016.09.28 00:01"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "A titkosítás egyik legegyszerűbb formája, amikor egy $n$ karakterből álló szöveg minden egyes karakterét eltoljuk egy szintén $m$ számból álló kulcscsal. Ez az úgynevezett One Time Pad. a feladatotok ennek egy kicsit bonyolultabb változatának elkészítése lesz."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Mint tudjátok, a számítógépek mindent binárisan tárolnak. Számokra az eltolás az $\\oplus$ (xor) műveletnek felel meg. Ennek szabályai:\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "0 \\oplus 0 &= 0 \\\\\n",
+    "0 \\oplus 1 &= 1 \\\\\n",
+    "1 \\oplus 0 &= 1 \\\\\n",
+    "1 \\oplus 1 &= 0\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "Pythonban az $a \\oplus b$ megfelelője: ```a ^ b```."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "collapsed": true,
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "Ha rendelkezésre áll egy titkosítandó szöveg ($M$) és egy ugyanolyan hosszú titkosítókulcs ($K$), $M$ titkosítása OTP segítségével $S = M \\oplus K$. Mivel $K \\oplus K \\equiv 1$, a dekódolás egyszerűen $M = M \\oplus 1 = M \\oplus (K \\oplus K) = (M \\oplus K) \\oplus K = S \\oplus K$."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "A gyakorlatban ezt úgy lehet megvalósítani, hogy két stringet (üzenet és kulcs) átalakítunk a betűiket leíró Unicode kódok listájává, ezeket a listákat elemenként $\\oplus$-ozzuk, majd a kapott listát visszaalakítjuk stringgé. Ez lesz az első feladat."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 1. feladat\n",
+    "Az ```encrypt(msg, key)``` függvény adja vissza az ```msg``` stringet ```key``` stringgel titkosítva. Ha nem ugyanolyan hosszú a két string, írjon ki informatív hibaüzenetet. Hasznos függvények: ```chr```, ```ord```."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "collapsed": true,
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "M = \"Test message to encrypt\"\n",
+    "K = \"nkjsy99ö23mlwőúdá_.dsa'\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "def encrypt(key, msg):\n",
+    "    \"\"\"Encrypts msg using key\"\"\"\n",
+    "    ..."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "None\n"
+     ]
+    }
+   ],
+   "source": [
+    "S = encrypt(M, K)\n",
+    "print(S)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 2. feladat\n",
+    "A ```decrypt(msg, key)``` függvény oldja fel a ```key``` kulccsal titkosított ```msg``` üzenetet. Tipp: érdemes előbb végiggondolni, nagyon röviden meg lehet oldani."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "def decrypt(key, msg):\n",
+    "    \"\"\"Decrypts msg using key\"\"\"\n",
+    "    ..."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "None\n"
+     ]
+    }
+   ],
+   "source": [
+    "M2 = decrypt(S, K)\n",
+    "print(M2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 3. feladat\n",
+    "Általában nem praktikus, ha a kód olyan hosszú, mint a titkosítandó tartalom. Szerencsére a Python tud pseudo-random számokat generálni. Egy adott (rövid) kiindulási állapotból képes egy hosszú, randomnak tűnő, de determinisztikus számsort generálni."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "import random"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "27"
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "random.seed(19911110)\n",
+    "random.randint(0, 255) # 27-et kell kapnotok"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "írjatok egy olyan függvényt (```encrypt2(msg, shortkey)```), ami a ```shortkey``` (integer) alapján generált pseudo-random számok segítségével tetszólegesen hosszú üzenetet képes titkosítani."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "import random\n",
+    "def encrypt2(msg, shortkey):\n",
+    "    \"\"\"Encrzpts msg using a pseudo-random sequence based on shortkey.\"\"\"\n",
+    "    ..."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "encrypt2(\"Another test message\", 1234)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "anaconda-cloud": {},
+  "celltoolbar": "Slideshow",
+  "kernelspec": {
+   "display_name": "Python [default]",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.5.1"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 0
+}
